@@ -8,7 +8,7 @@ body,
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #f0f0f0;
+  background-color: #212325;
   transition: background-color 0.3s;
 }
 
@@ -110,5 +110,41 @@ body,
 
   .dark .miro-background {
     background-image: url("./src/assets/dotted-pattern-dark.svg");
+  }
+
+  @keyframes twinkle {
+
+    0%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  @keyframes hudTwinkle {
+    0%,
+    100% {
+      opacity: 0.2;
+      transform: scale(0.6);
+    }
+
+    50% {
+      opacity: 0.6;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes animStar {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-2000px);
+    }
   }
 }

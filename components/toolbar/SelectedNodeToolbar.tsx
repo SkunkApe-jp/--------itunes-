@@ -186,6 +186,7 @@ export const SelectedNodeToolbar: React.FC<SelectedNodeToolbarProps> = ({
           <div className="flex flex-col gap-1">
             {renderFontSection("BODY", "bodyFontStyle", "bodyFontSize", "bodyColor", 15, bodySizes)}
             {renderFontSection("HEADER", "headerFontStyle", "headerFontSize", "headerColor", 18, headerSizes)}
+            {renderBackgroundSection("HEADER BG", false, 'headerBackgroundColor', 'headerBlur', 'headerGrayLayer')}
             
             <FormatToolbar 
               onInsertMarkdown={insertMarkdown} 

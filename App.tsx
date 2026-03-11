@@ -64,6 +64,10 @@ function App() {
     setGlobalHeaderGrayLayer,
     isDarkMode,
     setIsDarkMode,
+    showStars,
+    setShowStars,
+    customBackground,
+    setCustomBackground,
     lastSaved,
     setLastSaved,
     showSettings,
@@ -157,6 +161,8 @@ function App() {
     isAutoSave,
     showGrid,
     snapToGrid,
+    showStars,
+    customBackground,
     toolMode,
     setGlobalHeaderFont,
     setGlobalHeaderFontSize,
@@ -174,6 +180,8 @@ function App() {
     setIsAutoSave,
     setShowGrid,
     setSnapToGrid,
+    setShowStars,
+    setCustomBackground,
     setToolMode,
     setLastSaved,
   });
@@ -223,7 +231,7 @@ function App() {
       try {
         setAiConfig(JSON.parse(savedConfig));
         configureAI(JSON.parse(savedConfig));
-      } catch (e) {}
+      } catch (e) { }
     } else configureAI(aiConfig);
     if (!localStorage.getItem("iamtired_onboarding_complete") && !savedConfig)
       setShowWelcome(true);
@@ -513,6 +521,10 @@ function App() {
             snapToGrid={snapToGrid}
             onToggleGrid={() => setShowGrid(!showGrid)}
             onToggleSnap={() => setSnapToGrid(!snapToGrid)}
+            showStars={showStars}
+            onToggleStars={() => setShowStars(!showStars)}
+            customBackground={customBackground}
+            onSetCustomBackground={setCustomBackground}
             isDarkMode={isDarkMode}
             onToggleTheme={() => setIsDarkMode(!isDarkMode)}
             onOpenSettings={() => setShowSettings(true)}
@@ -586,6 +598,7 @@ function App() {
           registerFormatRef={(ref) => (activeEditorRef.current = ref.current)}
           showGrid={showGrid}
           snapToGrid={snapToGrid}
+          showStars={showStars}
           globalFont={globalBodyFont}
           globalHeaderFont={globalHeaderFont}
           globalHeaderFontSize={globalHeaderFontSize}
@@ -601,6 +614,7 @@ function App() {
           isDarkMode={isDarkMode}
           onPanDraggingChange={setIsPanDragging}
           onSelectionDraggingChange={setIsSelecting}
+          customBackground={customBackground}
           onContextMenu={handleShowContextMenu}
         />
         <div

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { ChevronDown, ChevronUp, Info, Keyboard } from 'lucide-react';
 
 interface HUDProps {
@@ -18,17 +19,19 @@ const ShortcutRow = ({ label, action }: { label: string, action: string }) => (
 );
 
 export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount, zoomScale, lastSaved, globalFont }) => {
+
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
     <div className={`fixed bottom-8 right-8 z-40 flex flex-col items-end gap-3 pointer-events-none font-mono`}>
       {/* System Status Panel - Always Visible */}
       <div className="force-glass p-1.5 pointer-events-auto shadow-2xl w-[180px] flex flex-col animate-in slide-in-from-right-4 duration-500">
+
         <div className="flex items-center gap-2.5 px-2.5 py-1.5 border-b border-zinc-200/50 dark:border-white/5 mb-1.5">
           <Info size={14} className="text-zinc-500 dark:text-zinc-400" />
           <span className="text-[10px] uppercase tracking-[0.15em] font-black text-zinc-500 dark:text-zinc-400">System Status</span>
         </div>
-        
+
         <div className="flex flex-col gap-2 px-2 pb-1.5">
           {lastSaved && (
             <div className="flex items-center justify-between gap-2 text-[9px] text-zinc-400 dark:text-zinc-500 w-full pb-1.5">
@@ -39,12 +42,12 @@ export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount,
               </div>
             </div>
           )}
-          
+
           <div className="flex items-center justify-between gap-2 text-[9px] text-zinc-400 dark:text-zinc-500 w-full">
             <span className="uppercase tracking-wider font-bold opacity-60">Nodes</span>
             <span className="font-bold text-zinc-600 dark:text-zinc-300">{nodeCount}</span>
           </div>
-          
+
           <div className="flex items-center justify-between gap-2 text-[9px] text-zinc-400 dark:text-zinc-500 w-full">
             <span className="uppercase tracking-wider font-bold opacity-60">Links</span>
             <span className="font-bold text-zinc-600 dark:text-zinc-300">{connectionCount}</span>
@@ -59,6 +62,7 @@ export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount,
             <span className="uppercase tracking-wider font-bold opacity-60">Zoom</span>
             <span className="font-bold text-zinc-600 dark:text-zinc-300">{Math.round(zoomScale * 100)}%</span>
           </div>
+
         </div>
       </div>
 

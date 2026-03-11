@@ -14,14 +14,32 @@ interface GridBackgroundOptions {
     viewport: Viewport;
     showGrid: boolean;
     isDarkMode: boolean;
+    customBackground?: string | null;
 }
 
-export const getGridBackground = ({ viewport, showGrid, isDarkMode }: GridBackgroundOptions): React.CSSProperties => {
-    if (!showGrid) return {};
-
+export const getGridBackground = ({ viewport, showGrid, isDarkMode, customBackground }: GridBackgroundOptions): React.CSSProperties => {
     const bgSize = 85.5;
-
     const dotSvg = isDarkMode ? dotPatternDark : dotPattern;
+
+    if (customBackground) {
+        if (!showGrid) {
+            return {
+                backgroundImage: `url("${customBackground}")`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            };
+        }
+
+        return {
+            backgroundImage: `url("${dotSvg}"), url("${customBackground}")`,
+            backgroundSize: `${bgSize}px ${bgSize}px, cover`,
+            backgroundPosition: `${viewport.x}px ${viewport.y}px, center`,
+            backgroundRepeat: 'repeat, no-repeat'
+        };
+    }
+
+    if (!showGrid) return {};
 
     return {
         backgroundImage: `url("${dotSvg}")`,

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MousePointer, Move, Image as ImageIcon, StickyNote, Upload, Save, Download, RefreshCcw, HardDrive, Grid, Magnet, Sun, Moon, ChevronLeft, ChevronRight, Settings, Sparkles } from 'lucide-react';
+import { MousePointer, Move, Image as ImageIcon, StickyNote, Upload, Save, Download, RefreshCcw, HardDrive, Grid, Magnet, Sun, Moon, ChevronLeft, ChevronRight, Settings, Sparkles, Star, X } from 'lucide-react';
 import { ToolMode } from '../../types';
 
 interface ToolButtonProps {
@@ -14,8 +14,8 @@ const ToolButton: React.FC<ToolButtonProps> = ({ active, onClick, icon, label })
   <button
     onClick={onClick}
     className={`w-8 h-8 flex items-center justify-center transition-colors ${active
-        ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
-        : 'text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100'
+      ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
+      : 'text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100'
       }`}
     title={label}
   >
@@ -43,6 +43,11 @@ interface ToolbarProps {
   snapToGrid: boolean;
   onToggleGrid: () => void;
   onToggleSnap: () => void;
+  showStars: boolean;
+  onToggleStars: () => void;
+
+  customBackground: string | null;
+  onSetCustomBackground: (img: string | null) => void;
 
   // Theme
   isDarkMode: boolean;
@@ -59,6 +64,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   onAddNode, toolMode, setToolMode, onZoomIn, onZoomOut,
   isAutoSave, onToggleAutoSave, onSaveLocal, onLoadLocal, onExportFile, onImportFile,
   showGrid, snapToGrid, onToggleGrid, onToggleSnap,
+  showStars, onToggleStars,
+  customBackground, onSetCustomBackground,
   isDarkMode, onToggleTheme, onOpenSettings, onOpenWelcome,
   children
 }) => {
@@ -67,6 +74,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const [menuRect, setMenuRect] = useState<DOMRect | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const bgInputRef = useRef<HTMLInputElement>(null);
   const importInputRef = useRef<HTMLInputElement>(null);
   const saveBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -76,7 +84,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         setMenuRect(saveBtnRef.current.getBoundingClientRect());
       }
     };
-    
+
     updateRect();
     window.addEventListener('resize', updateRect);
     return () => window.removeEventListener('resize', updateRect);
@@ -100,6 +108,18 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (importInputRef.current) importInputRef.current.value = '';
   }
 
+  const handleBgUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        onSetCustomBackground(evt.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+    if (bgInputRef.current) bgInputRef.current.value = '';
+  };
+
   const btnClass = "w-8 h-8 flex items-center justify-center transition-colors text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100";
   const activeBtnClass = "bg-blue-500/20 text-blue-600 dark:text-blue-400";
   const menuTextClass = "text-zinc-600 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100 transition-colors";
@@ -117,10 +137,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <div className="flex items-center gap-2">
           {/* System / Save Menu + Settings */}
           <div className={containerClass}>
-            <button 
+            <button
               ref={saveBtnRef}
-              onClick={() => setShowSaveMenu(!showSaveMenu)} 
-              className={`${showSaveMenu ? 'bg-black/5 text-zinc-900 dark:bg-white/10 dark:text-zinc-100' : ''} ${btnClass}`} 
+              onClick={() => setShowSaveMenu(!showSaveMenu)}
+              className={`${showSaveMenu ? 'bg-black/5 text-zinc-900 dark:bg-white/10 dark:text-zinc-100' : ''} ${btnClass}`}
               title="System, Save & Load Menu"
             >
               <Save size={18} />
@@ -133,7 +153,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             {showSaveMenu && createPortal(
               <>
                 <div className="fixed inset-0 z-[199]" onClick={() => setShowSaveMenu(false)} />
-                <div 
+                <div
                   className={`${glassMenuClass} fixed`}
                   style={{
                     bottom: menuRect ? (window.innerHeight - menuRect.top + 8) : 'auto',
@@ -188,6 +208,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             <div className="w-px h-5 bg-zinc-200 dark:bg-white/10 mx-1"></div>
 
             <button onClick={onToggleGrid} className={`${showGrid ? activeBtnClass : ''} ${btnClass}`} title="Toggle Background Grid"><Grid size={18} /></button>
+            {!showGrid && (
+              <button onClick={onToggleStars} className={`${showStars ? activeBtnClass : ''} ${btnClass}`} title="Toggle Stars Background"><Star size={18} /></button>
+            )}
+            <button onClick={() => bgInputRef.current?.click()} className={`${customBackground ? activeBtnClass : ''} ${btnClass}`} title="Set Background Image"><ImageIcon size={18} /></button>
+            {customBackground && (
+              <button onClick={() => onSetCustomBackground(null)} className={btnClass} title="Remove Background Image"><X size={18} /></button>
+            )}
+            <input type="file" ref={bgInputRef} className="hidden" accept="image/*" onChange={handleBgUpload} />
             <button onClick={onToggleSnap} className={`${snapToGrid ? activeBtnClass : ''} ${btnClass}`} title="Toggle Snap to Grid"><Magnet size={18} /></button>
 
             <div className="w-px h-5 bg-zinc-200 dark:bg-white/10 mx-1"></div>

@@ -259,105 +259,105 @@ export const WikiNode = memo(({
   };
 
   if (node.type === 'group') {
-    return (
-      <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
-        <NodeHeader
-          title={node.title} isEditing={isEditing} zIndex={baseZIndex}
-          onUpdateTitle={(t) => onUpdate(node.id, { title: t })}
-          onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
-          onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
-          onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)}
-          onBranch={handleBranchClick} hasImage={false} globalFont={effectiveHeaderFont}
-          fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
-          backgroundColor={resolvedHeaderBg} blur={resolvedHeaderBlur} grayLayer={node.headerGrayLayer}
-          isHovered={areControlsVisible}
-          globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
-        />
-      </NodeWrapper>
-    );
-  }
-
-  if (node.type === 'image') {
-    return (
-      <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
-        <ImageNodeView
-          image={node.coverImage} title={node.title} zIndex={baseZIndex}
-          fit={node.imageFit} position={node.imagePosition} globalFont={effectiveCaptionFont}
-          captionFontStyle={node.captionFontStyle} captionFontSize={effectiveCaptionSize}
-          captionColor={effectiveCaptionColor} globalColor={globalColor} height={node.height}
-          blur={node.blur} backgroundColor={node.backgroundColor}
-          globalBlur={globalBlur} globalBackgroundColor={globalBackgroundColor}
-          onDelete={() => onDelete(node.id)} onTitleChange={(t) => onUpdate(node.id, { title: t })}
-          onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
-          onDragStart={(e) => onDragStart(e, node.id, node)}
-          onUpdateSettings={(f, p) => onUpdate(node.id, { imageFit: f, imagePosition: p })}
-          onAskAI={() => onUpdate(node.id, { activeAIPanel: 'ask' })}
-          onGenerateImage={() => onUpdate(node.id, { activeAIPanel: 'image-gen' })}
-          aiPanel={node.activeAIPanel !== 'branch' ? aiPanel : null}
-          isHovered={areControlsVisible}
-        />
-        {node.activeAIPanel === 'branch' && aiPanel}
-      </NodeWrapper>
-    );
-  }
-
-  if (node.type === 'title') {
-    return (
-      <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
-        {node.activeAIPanel && <AIPanel mode={node.activeAIPanel} query={aiQuery} setQuery={setAiQuery} onSubmit={submitAI} onClose={() => onUpdate(node.id, { activeAIPanel: undefined })} globalFont={effectiveHeaderFont} position="top" />}
-        <NodeHeader
-          title={node.title} isEditing={isEditing} zIndex={baseZIndex}
-          onUpdateTitle={(t) => onUpdate(node.id, { title: t })}
-          onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
-          onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
-          onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)}
-          onBranch={handleBranchClick} hasImage={false} globalFont={effectiveHeaderFont}
-          fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
-          backgroundColor={node.backgroundColor} blur={node.blur} grayLayer={node.headerGrayLayer}
-          isHovered={areControlsVisible}
-          isTitle={true}
-          globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
-        />
-      </NodeWrapper>
-    );
-  }
-
   return (
     <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
-      {node.coverImage && (
-        <NodeImage
-          url={node.coverImage} title={node.title} height={node.imageHeight || 160} fit={node.imageFit || 'cover'} position={node.imagePosition}
-          onUpdateImage={(url) => onUpdate(node.id, { coverImage: url })}
-          onUpdateSettings={(h, f, p) => onUpdate(node.id, { imageHeight: h, imageFit: f, imagePosition: p })}
-          isHovered={areControlsVisible}
-        />
-      )}
-      <div ref={headerRef} className="flex-none">
-        <NodeHeader
-            title={node.title} isEditing={isEditing} zIndex={baseZIndex} hasImage={!!node.coverImage}
-            globalFont={effectiveHeaderFont} fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
-            onUpdateTitle={(t) => onUpdate(node.id, { title: t })} onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
-            onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
-            onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)} onBranch={handleBranchClick}
-            backgroundColor={resolvedHeaderBg} blur={resolvedHeaderBlur} grayLayer={node.headerGrayLayer}
-            isHovered={areControlsVisible}
-            globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
-        />
-      </div>
-      <TextNodeView
-        ref={textareaRef} content={node.content} isEditing={isEditing} isGenerating={node.isGenerating}
-        fontStyle={node.bodyFontStyle} fontSize={effectiveBodySize} globalFont={effectiveBodyFont}
-        bodyColor={effectiveBodyColor} globalColor={globalColor}
-        onChange={(e) => onUpdate(node.id, { content: e.target.value })}
-        onDoubleClick={handleEnterEdit} onExpand={() => onUpdate(node.id, { activeAIPanel: 'expand' })}
-        onEditAI={() => onUpdate(node.id, { activeAIPanel: 'edit' })}
-        onImageSearch={() => onSetImage(node.id, node.title, 'search')} onImageGen={() => onSetImage(node.id, node.title, 'generate')}
+      <NodeHeader
+        title={node.title} isEditing={isEditing} zIndex={baseZIndex}
+        onUpdateTitle={(t) => onUpdate(node.id, { title: t })}
+        onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
+        onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
+        onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)}
+        onBranch={handleBranchClick} hasImage={false} globalFont={effectiveHeaderFont}
+        fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
+        backgroundColor={resolvedHeaderBg} blur={node.blur} headerBlur={resolvedHeaderBlur} grayLayer={node.headerGrayLayer}
+        isHovered={areControlsVisible}
+        globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
+      />
+    </NodeWrapper>
+  );
+}
+
+if (node.type === 'image') {
+  return (
+    <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
+      <ImageNodeView
+        image={node.coverImage} title={node.title} zIndex={baseZIndex}
+        fit={node.imageFit} position={node.imagePosition} globalFont={effectiveCaptionFont}
+        captionFontStyle={node.captionFontStyle} captionFontSize={effectiveCaptionSize}
+        captionColor={effectiveCaptionColor} globalColor={globalColor} height={node.height}
+        blur={node.blur} backgroundColor={node.backgroundColor}
+        globalBlur={globalBlur} globalBackgroundColor={globalBackgroundColor}
+        onDelete={() => onDelete(node.id)} onTitleChange={(t) => onUpdate(node.id, { title: t })}
+        onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
+        onDragStart={(e) => onDragStart(e, node.id, node)}
+        onUpdateSettings={(f, p) => onUpdate(node.id, { imageFit: f, imagePosition: p })}
+        onAskAI={() => onUpdate(node.id, { activeAIPanel: 'ask' })}
+        onGenerateImage={() => onUpdate(node.id, { activeAIPanel: 'image-gen' })}
         aiPanel={node.activeAIPanel !== 'branch' ? aiPanel : null}
         isHovered={areControlsVisible}
       />
       {node.activeAIPanel === 'branch' && aiPanel}
     </NodeWrapper>
   );
+}
+
+if (node.type === 'title') {
+  return (
+    <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
+      {node.activeAIPanel && <AIPanel mode={node.activeAIPanel} query={aiQuery} setQuery={setAiQuery} onSubmit={submitAI} onClose={() => onUpdate(node.id, { activeAIPanel: undefined })} globalFont={effectiveHeaderFont} position="top" />}
+      <NodeHeader
+        title={node.title} isEditing={isEditing} zIndex={baseZIndex}
+        onUpdateTitle={(t) => onUpdate(node.id, { title: t })}
+        onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
+        onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
+        onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)}
+        onBranch={handleBranchClick} hasImage={false} globalFont={effectiveHeaderFont}
+        fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
+        backgroundColor={node.backgroundColor} blur={node.blur} headerBlur={node.headerBlur} grayLayer={node.headerGrayLayer}
+        isHovered={areControlsVisible}
+        isTitle={true}
+        globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
+      />
+    </NodeWrapper>
+  );
+}
+
+return (
+  <NodeWrapper {...wrapperProps} onResizeStart={(e, id, _, dir) => onResizeStart(e, id, node, dir)}>
+    {node.coverImage && (
+      <NodeImage
+        url={node.coverImage} title={node.title} height={node.imageHeight || 160} fit={node.imageFit || 'cover'} position={node.imagePosition}
+        onUpdateImage={(url) => onUpdate(node.id, { coverImage: url })}
+        onUpdateSettings={(h, f, p) => onUpdate(node.id, { imageHeight: h, imageFit: f, imagePosition: p })}
+        isHovered={areControlsVisible}
+      />
+    )}
+    <div ref={headerRef} className="flex-none">
+      <NodeHeader
+          title={node.title} isEditing={isEditing} zIndex={baseZIndex} hasImage={!!node.coverImage}
+          globalFont={effectiveHeaderFont} fontStyle={node.headerFontStyle} fontSize={effectiveHeaderSize} headerColor={effectiveHeaderColor} globalColor={globalColor}
+          onUpdateTitle={(t) => onUpdate(node.id, { title: t })} onUpdateZIndex={(z) => onUpdate(node.id, { zIndex: z })}
+          onEnterEdit={handleEnterEdit} onExitEdit={() => setIsEditing(false)}
+          onDragStart={(e) => onDragStart(e, node.id, node)} onDelete={() => onDelete(node.id)} onBranch={handleBranchClick}
+          backgroundColor={resolvedHeaderBg} blur={node.blur} headerBlur={resolvedHeaderBlur} grayLayer={node.headerGrayLayer}
+          isHovered={areControlsVisible}
+          globalBackgroundColor={globalBackgroundColor} globalBlur={globalBlur} globalHeaderGrayLayer={globalHeaderGrayLayer}
+      />
+    </div>
+    <TextNodeView
+      ref={textareaRef} content={node.content} isEditing={isEditing} isGenerating={node.isGenerating}
+      fontStyle={node.bodyFontStyle} fontSize={effectiveBodySize} globalFont={effectiveBodyFont}
+      bodyColor={effectiveBodyColor} globalColor={globalColor}
+      onChange={(e) => onUpdate(node.id, { content: e.target.value })}
+      onDoubleClick={handleEnterEdit} onExpand={() => onUpdate(node.id, { activeAIPanel: 'expand' })}
+      onEditAI={() => onUpdate(node.id, { activeAIPanel: 'edit' })}
+      onImageSearch={() => onSetImage(node.id, node.title, 'search')} onImageGen={() => onSetImage(node.id, node.title, 'generate')}
+      aiPanel={node.activeAIPanel !== 'branch' ? aiPanel : null}
+      isHovered={areControlsVisible}
+    />
+    {node.activeAIPanel === 'branch' && aiPanel}
+  </NodeWrapper>
+);
 }, (prev, next) => (
   prev.node === next.node &&
   prev.node.zIndex === next.node.zIndex &&

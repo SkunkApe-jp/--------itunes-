@@ -13,12 +13,12 @@ export const useAppState = () => {
     const [isAutoSave, setIsAutoSave] = useState(true);
     const [showGrid, setShowGrid] = useState(true);
     const [snapToGrid, setSnapToGrid] = useState(true);
-    
+
     // Global Styles
     const [globalHeaderFont, setGlobalHeaderFont] = useState<'sans' | 'serif' | 'mono'>('sans');
     const [globalHeaderFontSize, setGlobalHeaderFontSize] = useState<number>(18);
     const [globalHeaderColor, setGlobalHeaderColor] = useState<string>('var(--node-text-0)');
-    
+
     const [globalBodyFont, setGlobalBodyFont] = useState<'sans' | 'serif' | 'mono'>('sans');
     const [globalBodyFontSize, setGlobalBodyFontSize] = useState<number>(15);
     const [globalColor, setGlobalColor] = useState<string>('var(--node-text-0)'); // Serves as globalBodyColor
@@ -48,12 +48,18 @@ export const useAppState = () => {
         model: 'gemini-3-flash-preview'
     });
 
+    const [showStars, setShowStars] = useState(false);
+
+    // Custom Background Image
+    const [customBackground, setCustomBackground] = useState<string | null>(null);
+
     return {
         toolMode, setToolMode,
         isSpacePressed, setIsSpacePressed,
         isAutoSave, setIsAutoSave,
         showGrid, setShowGrid,
         snapToGrid, setSnapToGrid,
+        showStars, setShowStars,
         globalHeaderFont, setGlobalHeaderFont,
         globalHeaderFontSize, setGlobalHeaderFontSize,
         globalHeaderColor, setGlobalHeaderColor,
@@ -70,6 +76,7 @@ export const useAppState = () => {
         lastSaved, setLastSaved,
         showSettings, setShowSettings,
         showWelcome, setShowWelcome,
-        aiConfig, setAiConfig
+        aiConfig, setAiConfig,
+        customBackground, setCustomBackground
     };
 };

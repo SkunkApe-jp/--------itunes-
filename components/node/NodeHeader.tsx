@@ -20,6 +20,7 @@ interface NodeHeaderProps {
   globalColor?: string;
   backgroundColor?: string;
   blur?: boolean;
+  headerBlur?: boolean;
   grayLayer?: boolean;
   isHovered: boolean;
   isTitle?: boolean;
@@ -29,7 +30,7 @@ interface NodeHeaderProps {
 }
 
 export const NodeHeader: React.FC<NodeHeaderProps> = ({
-  title, isEditing, zIndex, onUpdateTitle, onUpdateZIndex, onEnterEdit, onExitEdit, onDragStart, onDelete, onBranch, globalFont, fontStyle, fontSize, headerColor, globalColor, backgroundColor, blur, grayLayer, isHovered, isTitle,
+  title, isEditing, zIndex, onUpdateTitle, onUpdateZIndex, onEnterEdit, onExitEdit, onDragStart, onDelete, onBranch, globalFont, fontStyle, fontSize, headerColor, globalColor, backgroundColor, blur, headerBlur, grayLayer, isHovered, isTitle,
   globalBackgroundColor = 'var(--node-bg-0)', globalBlur = false, globalHeaderGrayLayer = true
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -62,18 +63,18 @@ export const NodeHeader: React.FC<NodeHeaderProps> = ({
 
   // Background Style Logic (Overlay)
   const tintStyle: React.CSSProperties = {};
-  const transparency = '15%';
-  const blurAmount = '36px';
+  const transparency = '35%'; // Cleaner, less opaque glass
+  const blurAmount = '24px'; // Slightly less blur for sharper look
 
-  // Resolve Effective Settings (Inherit globals if undefined)
+  // Resolve Effective Settings - headerBlur takes priority over blur for header-only glass
   const activeBg = backgroundColor || globalBackgroundColor;
-  const isBlurry = blur !== undefined ? blur : globalBlur;
+  const isBlurry = headerBlur !== undefined ? headerBlur : (blur !== undefined ? blur : globalBlur);
   const showGray = grayLayer !== undefined ? grayLayer : globalHeaderGrayLayer;
 
   // Render Condition:
   // 1. Title Nodes: Always render background (NodeWrapper is transparent)
-  // 2. Text/Group Headers: Only render if specifically overridden (local prop set), otherwise transparent to show NodeWrapper body
-  const shouldRenderBackground = isTitle || !!backgroundColor || blur !== undefined;
+  // 2. Text/Group Headers: Use headerBlur if set, otherwise fall back to blur behavior
+  const shouldRenderBackground = isTitle || !!backgroundColor || headerBlur !== undefined || blur !== undefined;
 
   if (shouldRenderBackground) {
       if (isBlurry) {
