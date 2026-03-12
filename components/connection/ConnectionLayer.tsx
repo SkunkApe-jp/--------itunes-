@@ -26,23 +26,8 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
     return getHandlePosition(node, handle || 'top', nodes);
   };
 
-  const getCurvedPathD = (start: Position, end: Position) => {
-    const dx = end.x - start.x;
-    const dy = end.y - start.y;
-    const absDx = Math.abs(dx);
-    const absDy = Math.abs(dy);
-    const isMostlyHorizontal = absDx >= absDy;
-    const dir = isMostlyHorizontal ? Math.sign(dx || 1) : Math.sign(dy || 1);
-    const curve = Math.max(60, Math.min(220, (isMostlyHorizontal ? absDx : absDy) * 0.5));
-
-    const c1 = isMostlyHorizontal
-      ? { x: start.x + curve * dir, y: start.y }
-      : { x: start.x, y: start.y + curve * dir };
-    const c2 = isMostlyHorizontal
-      ? { x: end.x - curve * dir, y: end.y }
-      : { x: end.x, y: end.y - curve * dir };
-
-    return `M ${start.x} ${start.y} C ${c1.x} ${c1.y}, ${c2.x} ${c2.y}, ${end.x} ${end.y}`;
+  const getStraightPathD = (start: Position, end: Position) => {
+    return `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
   };
 
   const OFF = 50000;
@@ -60,27 +45,31 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
     >
       <defs>
         <marker
-          id="connection-arrow"
+          id="connection-dot"
           viewBox="0 0 10 10"
-          refX="9"
+          refX="5"
           refY="5"
-          markerWidth="6"
-          markerHeight="6"
-          orient="auto"
+          markerWidth="8"
+          markerHeight="8"
         >
-          <path 
-            d="M 0 1 L 7 5 L 0 9 C 1 7, 2 5, 1 3 Z" 
+          <circle 
+            cx="5" 
+            cy="5" 
+            r="3" 
             fill="var(--text-main)" 
             fillOpacity="0.75" 
           />
         </marker>
       </defs>
 
-      {connections.filter(conn => !!conn).map(conn => {
+      {connections.map(conn => {
         const start = getPosition(conn.sourceId, conn.sourceHandle);
         const end = getPosition(conn.targetId, conn.targetHandle);
-        if (start.x === 0 && start.y === 0) return null;
-        if (end.x === 0 && end.y === 0) return null;
+        
+        // Validate that both nodes exist and have valid positions
+        if (!start || !end || (start.x === 0 && start.y === 0) || (end.x === 0 && end.y === 0)) {
+          return null;
+        }
 
         const startOff = { x: start.x + OFF, y: start.y + OFF };
         const endOff = { x: end.x + OFF, y: end.y + OFF };
@@ -96,6 +85,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
               onContextMenu={(e) => onContextMenu(e, 'connection', conn.id)}
               toolMode={toolMode}
               isSpacePressed={isSpacePressed}
+              marker="connection-dot"
             />
           );
         } else {
@@ -127,7 +117,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
 
       {mode === 'lines' && tempConnection && (
         <path
-          d={getCurvedPathD(
+          d={getStraightPathD(
             { x: tempConnection.start.x + OFF, y: tempConnection.start.y + OFF },
             { x: tempConnection.end.x + OFF, y: tempConnection.end.y + OFF }
           )}
@@ -137,7 +127,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeDasharray="6,6"
-          markerEnd="url(#connection-arrow)"
+          markerEnd="url(#connection-dot)"
           fill="none"
         />
       )}

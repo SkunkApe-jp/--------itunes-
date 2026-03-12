@@ -81,10 +81,16 @@ export const useGraphAI = ({ nodes, setNodes, updateNode, connectNodes, generate
 
     const generateContentForConvergentNode = useCallback(async (nodeId: string) => {
         const targetNode = nodes.find(n => n.id === nodeId);
-        if (!targetNode) return;
+        if (!targetNode) {
+            addToast({ title: 'Error', message: 'Target node not found', type: 'error' });
+            return;
+        }
 
         const sourceNodes = getSourceNodes(nodeId, connections, nodes);
-        if (sourceNodes.length === 0) return;
+        if (sourceNodes.length === 0) {
+            addToast({ title: 'No Sources', message: 'This node has no incoming connections to aggregate from', type: 'warning' });
+            return;
+        }
 
         updateNode(nodeId, { isGenerating: true });
 
@@ -95,10 +101,15 @@ export const useGraphAI = ({ nodes, setNodes, updateNode, connectNodes, generate
             }));
             const content = await generateArticleContent(targetNode.title, parentContexts);
             updateNode(nodeId, { content, isGenerating: false });
+            addToast({ 
+                title: 'Aggregation Complete', 
+                message: `Successfully aggregated content from ${sourceNodes.length} source nodes`, 
+                type: 'success' 
+            });
         } catch (e: any) {
             handleAIError(nodeId, e, 'Aggregation failed.');
         }
-    }, [nodes, connections, updateNode, handleAIError]);
+    }, [nodes, connections, updateNode, handleAIError, addToast]);
 
     const generateTitleFromContent = useCallback(async (nodeId: string) => {
         const node = nodes.find(n => n.id === nodeId);

@@ -27,7 +27,8 @@ export const useTabGraph = (activeTab: Tab, onUpdateTabData: (nodes: WikiNode[],
     // Sync changes back to tab state
     useEffect(() => {
         const timeout = setTimeout(() => {
-            if (activeTab.id === prevTabIdRef.current) {
+            // Only save if we're still on the same tab and the tab hasn't been destroyed
+            if (activeTab.id === prevTabIdRef.current && activeTab.id) {
                 onUpdateTabData(nodes, connections, viewport);
             }
         }, 50);
@@ -44,11 +45,20 @@ export const useTabGraph = (activeTab: Tab, onUpdateTabData: (nodes: WikiNode[],
     const connectNodes = useCallback((sourceId: string, targetId: string, sourceHandle: HandlePosition, targetHandle: HandlePosition) => {
         if (sourceId === targetId) return;
         setConnections(prev => {
-            const exists = prev.find(c => 
-                (c.sourceId === sourceId && c.targetId === targetId && c.sourceHandle === sourceHandle && c.targetHandle === targetHandle) ||
-                (c.sourceId === targetId && c.targetId === sourceId && c.sourceHandle === targetHandle && c.targetHandle === sourceHandle)
+            // Check for exact duplicate
+            const exactDuplicate = prev.find(c => 
+                c.sourceId === sourceId && c.targetId === targetId && 
+                c.sourceHandle === sourceHandle && c.targetHandle === targetHandle
             );
-            if (exists) return prev;
+            if (exactDuplicate) return prev;
+            
+            // Check for reverse duplicate (opposite direction with appropriate handles)
+            const reverseDuplicate = prev.find(c => 
+                c.sourceId === targetId && c.targetId === sourceId &&
+                c.sourceHandle === targetHandle && c.targetHandle === sourceHandle
+            );
+            if (reverseDuplicate) return prev;
+            
             return [...prev, { id: generateId(), sourceId, targetId, sourceHandle, targetHandle, label: '' }];
         });
     }, []);

@@ -499,15 +499,52 @@ function App() {
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file && contextMenu.targetId) {
+            // Validate file type and size
+            if (!file.type.startsWith('image/')) {
+              addToast({
+                title: "Invalid File",
+                message: "Please select an image file",
+                type: "error",
+              });
+              e.target.value = "";
+              return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) { // 10MB limit
+              addToast({
+                title: "File Too Large",
+                message: "Image files must be smaller than 10MB",
+                type: "error",
+              });
+              e.target.value = "";
+              return;
+            }
+
             const reader = new FileReader();
             reader.onload = (ev) => {
-              graph.updateNode(contextMenu.targetId!, {
-                coverImage: ev.target?.result as string,
-              });
+              const result = ev.target?.result;
+              if (typeof result === 'string' && result.startsWith('data:image/')) {
+                graph.updateNode(contextMenu.targetId!, {
+                  coverImage: result,
+                });
+                addToast({
+                  title: "Replaced",
+                  message: "Image updated",
+                  type: "success",
+                });
+              } else {
+                addToast({
+                  title: "Upload Failed",
+                  message: "Invalid image data",
+                  type: "error",
+                });
+              }
+            };
+            reader.onerror = () => {
               addToast({
-                title: "Replaced",
-                message: "Image updated",
-                type: "success",
+                title: "Upload Failed",
+                message: "Failed to read file",
+                type: "error",
               });
             };
             reader.readAsDataURL(file);
@@ -729,7 +766,7 @@ function App() {
           <ContextMenu
             x={contextMenu.x}
             y={contextMenu.y}
-            type={contextMenu.type as any}
+            type={contextMenu.type as 'canvas' | 'node' | 'connection' | 'selection'}
             onClose={hideContextMenu}
             onAction={handleContextMenuAction}
             hasMultiSelection={selectedCount > 1}
