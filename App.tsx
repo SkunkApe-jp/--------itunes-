@@ -103,6 +103,7 @@ function App() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const activeEditorRef = useRef<HTMLTextAreaElement | null>(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
+  const fileReaderRef = useRef<FileReader | null>(null);
 
   const handleShowContextMenu = useCallback(
     (
@@ -520,8 +521,15 @@ function App() {
               return;
             }
 
-            const reader = new FileReader();
-            reader.onload = (ev) => {
+            // Cleanup previous reader if exists
+            if (fileReaderRef.current) {
+              fileReaderRef.current.abort();
+              fileReaderRef.current.onload = null;
+              fileReaderRef.current.onerror = null;
+            }
+
+            fileReaderRef.current = new FileReader();
+            fileReaderRef.current.onload = (ev) => {
               const result = ev.target?.result;
               if (typeof result === 'string' && result.startsWith('data:image/')) {
                 graph.updateNode(contextMenu.targetId!, {
@@ -539,15 +547,19 @@ function App() {
                   type: "error",
                 });
               }
+              // Cleanup reader
+              fileReaderRef.current = null;
             };
-            reader.onerror = () => {
+            fileReaderRef.current.onerror = () => {
               addToast({
                 title: "Upload Failed",
                 message: "Failed to read file",
                 type: "error",
               });
+              // Cleanup reader
+              fileReaderRef.current = null;
             };
-            reader.readAsDataURL(file);
+            fileReaderRef.current.readAsDataURL(file);
           }
           e.target.value = "";
         }}

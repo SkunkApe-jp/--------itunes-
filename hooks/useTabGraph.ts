@@ -13,6 +13,7 @@ export const useTabGraph = (activeTab: Tab, onUpdateTabData: (nodes: WikiNode[],
     const [connections, setConnections] = useState<Connection[]>(activeTab.connections);
     const [viewport, setViewport] = useState<Viewport>(activeTab.viewport);
     const prevTabIdRef = useRef(activeTab.id);
+    const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Sync state when active tab changes
     useEffect(() => {
@@ -26,13 +27,25 @@ export const useTabGraph = (activeTab: Tab, onUpdateTabData: (nodes: WikiNode[],
 
     // Sync changes back to tab state
     useEffect(() => {
-        const timeout = setTimeout(() => {
+        // Clear any existing timeout
+        if (saveTimeoutRef.current) {
+            clearTimeout(saveTimeoutRef.current);
+        }
+        
+        saveTimeoutRef.current = setTimeout(() => {
             // Only save if we're still on the same tab and the tab hasn't been destroyed
             if (activeTab.id === prevTabIdRef.current && activeTab.id) {
                 onUpdateTabData(nodes, connections, viewport);
             }
+            saveTimeoutRef.current = null;
         }, 50);
-        return () => clearTimeout(timeout);
+        
+        return () => {
+            if (saveTimeoutRef.current) {
+                clearTimeout(saveTimeoutRef.current);
+                saveTimeoutRef.current = null;
+            }
+        };
     }, [nodes, connections, viewport, onUpdateTabData, activeTab.id]);
 
     const getNextZIndex = useCallback(() => nodes.length === 0 ? 1 : Math.max(...nodes.map(n => n.zIndex || 0)) + 1, [nodes]);

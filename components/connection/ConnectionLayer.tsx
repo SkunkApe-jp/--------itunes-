@@ -67,7 +67,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({
         const end = getPosition(conn.targetId, conn.targetHandle);
         
         // Validate that both nodes exist and have valid positions
-        if (!start || !end || (start.x === 0 && start.y === 0) || (end.x === 0 && end.y === 0)) {
+        if (!start || !end || !start.x || !start.y || !end.x || !end.y) {
           return null;
         }
 
