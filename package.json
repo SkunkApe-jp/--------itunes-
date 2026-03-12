@@ -55,7 +55,7 @@
       "icon": "icon.png"
     },
     "win": {
-      "target": ["nsis"],
+      "target": ["dir"],
       "icon": "icon.png"
     },
     "mac": {
