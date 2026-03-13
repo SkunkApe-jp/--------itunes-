@@ -82,8 +82,8 @@ export const NodeWrapper = forwardRef<HTMLDivElement, NodeWrapperProps>(({
             // Glass effect matching HUD aesthetic (36px blur, ~0.85 opacity)
             // Mix base color to match glass opacity (15% transparency = 0.85 alpha)
             style.backgroundColor = `color-mix(in srgb, ${baseColor}, transparent 15%)`;
-            style.backdropFilter = 'blur(36px)';
-            style.WebkitBackdropFilter = 'blur(36px)';
+            style.backdropFilter = 'blur(15px)';
+            style.WebkitBackdropFilter = 'blur(15px)';
         } else {
             // Solid effect - Force opacity 1
             style.backgroundColor = baseColor;
