@@ -39,7 +39,7 @@ const generateTextCommon = async (systemPrompt: string, userPrompt: string): Pro
         }
     }
 
-    if (provider === 'openai' || provider === 'openrouter' || provider === 'local') {
+    if (provider === 'openai' || provider === 'openrouter' || provider === 'local' || provider === 'groq') {
         try {
             return await generateWithOpenAI(systemPrompt, userPrompt, currentConfig);
         } catch (e) {

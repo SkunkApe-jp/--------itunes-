@@ -125,20 +125,19 @@ export const TabListDropdown: React.FC<TabListDropdownProps> = ({ tabs, activeTa
                                     onClick={() => { onSwitchTab(tab.id); onClose(); }}
                                     className={`w-full px-3 py-2 flex items-center gap-2 text-left transition-all group relative
                                         ${tab.id === activeTabId
-                                            ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 font-semibold'
+                                            ? 'bg-custom-blue-500/10 text-custom-blue-600 dark:text-custom-blue-400 font-semibold'
                                             : 'text-zinc-600 dark:text-zinc-400 hover:bg-black/5 dark:hover:bg-white/10 hover:text-zinc-900 dark:hover:text-zinc-100'
-                                        }
-                                        ${isBeingDraggedOver ? 'bg-blue-500/5' : ''}`}
+                                        }`}
                                 >
                                     {isBeingDraggedOver && (
-                                        <div className={`absolute left-0 right-0 h-0.5 bg-blue-500 z-10 ${draggedIndex !== null && actualIndex < draggedIndex ? 'top-0' : 'bottom-0'}`} />
+                                        <div className={`absolute left-0 right-0 h-0.5 bg-custom-blue-500 z-10 ${draggedIndex !== null && actualIndex < draggedIndex ? 'top-0' : 'bottom-0'}`} />
                                     )}
-                                    <span className={`text-[10px] w-5 shrink-0 transition-colors ${tab.id === activeTabId ? 'text-blue-500' : 'text-zinc-400 dark:text-zinc-500'}`}>
+                                    <span className={`text-[10px] w-5 shrink-0 transition-colors ${tab.id === activeTabId ? 'text-custom-blue-500' : 'text-zinc-400 dark:text-zinc-500'}`}>
                                         {(actualIndex + 1).toString().padStart(2, '0')}
                                     </span>
                                     <span className="text-xs truncate flex-1">{tab.title}</span>
                                     {tab.id === activeTabId && (
-                                        <span className="text-[10px] text-blue-500 dark:text-blue-400 animate-pulse">●</span>
+                                        <span className="text-[10px] text-custom-blue-500 dark:text-custom-blue-400 animate-pulse">●</span>
                                     )}
                                 </button>
                             );

@@ -28,6 +28,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
         } else {
             if (provider === 'local') setBaseUrl('http://localhost:11434/v1');
             else if (provider === 'openrouter') setBaseUrl('https://openrouter.ai/api/v1');
+            else if (provider === 'groq') setBaseUrl('https://api.groq.com/openai/v1');
             else setBaseUrl('');
 
             setModel('');
@@ -40,7 +41,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
         onClose();
     };
 
-    const providers: AIProvider[] = ['gemini', 'openai', 'claude', 'openrouter', 'local'];
+    const providers: AIProvider[] = ['gemini', 'openai', 'claude', 'openrouter', 'local', 'groq'];
 
     const rect = buttonRef.current?.getBoundingClientRect();
 
@@ -53,7 +54,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
 
                 <div className="flex items-center justify-between border-b border-[var(--glass-border)] pb-4">
                     <h2 className="text-[15px] font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                        <Settings2 size={18} className="text-blue-600" />
+                        <Settings2 size={18} className="text-custom-blue-600" />
                         AI Settings
                     </h2>
                     <button onClick={onClose} className="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
@@ -128,7 +129,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
                                     value={apiKey}
                                     onChange={(e) => setApiKey(e.target.value)}
                                     placeholder={`Your ${provider} secret key`}
-                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-blue-500 dark:border-white/5 dark:focus:border-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-custom-blue-500 dark:border-white/5 dark:focus:border-custom-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                                 />
                             </div>
                         ) : (
@@ -143,7 +144,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
                         )}
 
                         {/* Base URL */}
-                        {(provider === 'local' || provider === 'openrouter' || provider === 'openai') ? (
+                        {(provider === 'local' || provider === 'openrouter' || provider === 'openai' || provider === 'groq') ? (
                             <div className="flex flex-col gap-1.5 animate-in fade-in slide-in-from-top-1 duration-200">
                                 <label className="text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest flex items-center gap-1.5">
                                     <Globe size={12} /> Endpoint URI
@@ -152,8 +153,8 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
                                     type="text"
                                     value={baseUrl}
                                     onChange={(e) => setBaseUrl(e.target.value)}
-                                    placeholder={provider === 'local' ? "http://localhost:11434/v1" : "https://api.openai.com/v1"}
-                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-blue-500 dark:border-white/5 dark:focus:border-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                                    placeholder={provider === 'local' ? "http://localhost:11434/v1" : provider === 'groq' ? "https://api.groq.com/openai/v1" : "https://api.openai.com/v1"}
+                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-custom-blue-500 dark:border-white/5 dark:focus:border-custom-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                                 />
                             </div>
                         ) : (
@@ -180,9 +181,10 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
                                     provider === 'gemini' ? 'gemini-1.5-flash' :
                                         provider === 'openai' ? 'gpt-4o' :
                                             provider === 'claude' ? 'claude-3-5-sonnet-latest' :
-                                                'llama3'
+                                                provider === 'groq' ? 'meta-llama/llama-4-scout-17b-16e-instruct' :
+                                                    'llama3'
                                 }
-                                className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-blue-500 dark:border-white/5 dark:focus:border-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                                className="w-full bg-zinc-100 dark:bg-black/40 border border-transparent focus:border-custom-blue-500 dark:border-white/5 dark:focus:border-custom-blue-500/50 px-3 py-2.5 text-xs text-zinc-900 dark:text-zinc-100 outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                             />
                         </div>
                     </div>
@@ -191,7 +193,7 @@ export const SettingsMenu: React.FC<SettingsMenuProps> = ({ currentConfig, onSav
                 <div className="mt-auto pt-4 border-t border-zinc-200 dark:border-white/10">
                     <button
                         onClick={handleSave}
-                        className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40"
+                        className="w-full bg-custom-blue-600 hover:bg-custom-blue-500 text-white font-bold py-3.5 text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-custom-blue-500/20 hover:shadow-custom-blue-500/40"
                     >
                         <Save size={16} /> Deploy Configuration
                     </button>

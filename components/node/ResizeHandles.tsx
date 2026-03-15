@@ -7,7 +7,7 @@ interface ResizeHandlesProps {
 }
 
 export const ResizeHandles: React.FC<ResizeHandlesProps> = ({ nodeId, onResizeStart }) => {
-    const handleBase = "absolute bg-white dark:bg-zinc-800 border border-blue-600 dark:border-blue-500 z-50 shadow-sm transition-transform hover:scale-125";
+    const handleBase = "absolute bg-white dark:bg-zinc-800 border border-custom-blue-600 dark:border-custom-blue-500 z-50 shadow-sm transition-transform hover:scale-125";
     const cornerSize = "w-3.5 h-3.5";
 
     return (
@@ -25,7 +25,7 @@ export const ResizeHandles: React.FC<ResizeHandlesProps> = ({ nodeId, onResizeSt
             <div className={`${handleBase} ${cornerSize} cursor-se-resize`} style={{ bottom: -6, right: -6 }} onPointerDown={(e) => onResizeStart(e, nodeId, 'se')} />
 
             {/* Visual Borders for selection */}
-            <div className="absolute inset-0 pointer-events-none border-2 border-blue-500/30 z-20"></div>
+            <div className="absolute inset-0 pointer-events-none border-2 border-custom-blue-500/30 z-20"></div>
         </>
     );
 };

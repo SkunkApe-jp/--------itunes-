@@ -28,7 +28,7 @@ export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount,
       <div className="force-glass p-1.5 pointer-events-auto shadow-2xl w-[180px] flex flex-col animate-in slide-in-from-right-4 duration-500">
 
         <div className="flex items-center gap-2.5 px-2.5 py-1.5 border-b border-zinc-200/50 dark:border-white/5 mb-1.5">
-          <Info size={14} className="text-zinc-500 dark:text-zinc-400" />
+          <Info size={14} className="text-custom-blue-500 opacity-80" />
           <span className="text-[10px] uppercase tracking-[0.15em] font-black text-zinc-500 dark:text-zinc-400">System Status</span>
         </div>
 
@@ -36,9 +36,9 @@ export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount,
           {lastSaved && (
             <div className="flex items-center justify-between gap-2 text-[9px] text-zinc-400 dark:text-zinc-500 w-full pb-1.5">
               <span className="uppercase tracking-wider font-bold opacity-60">Last Sync</span>
-              <div className="flex items-center gap-1.5 bg-green-500/10 dark:bg-green-500/5 px-1.5 py-0.5 rounded-full border border-green-500/20">
-                <div className="w-1 h-1 bg-green-500 rounded-full"></div>
-                <span className="font-bold">{lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+              <div className="flex items-center gap-1.5 bg-custom-blue-500/10 dark:bg-custom-blue-500/5 px-1.5 py-0.5 rounded-full border border-custom-blue-500/20">
+                <div className="w-1 h-1 bg-custom-blue-500 rounded-full animate-pulse"></div>
+                <span className="font-bold text-custom-blue-600 dark:text-custom-blue-400">{lastSaved.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
             </div>
           )}
@@ -72,8 +72,8 @@ export const HUD: React.FC<HUDProps> = ({ nodeCount, connectionCount, wordCount,
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={`flex items-center justify-between gap-3 text-xs font-bold text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-all w-full px-2.5 py-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/5 ${isCollapsed ? '' : 'mb-2 bg-black/5 dark:bg-white/5'}`}
         >
-          <div className="flex items-center gap-2.5">
-            <Keyboard size={14} className="opacity-70" />
+          <div className="flex items-center gap-2.5 text-custom-blue-500">
+            <Keyboard size={14} className="opacity-90" />
             <span className="text-[10px] uppercase tracking-[0.15em] font-black">Shortcuts</span>
           </div>
           {isCollapsed ? <ChevronUp size={14} className="opacity-50" /> : <ChevronDown size={14} className="opacity-50" />}

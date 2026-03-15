@@ -78,11 +78,11 @@ export const ConnectionLabel: React.FC<ConnectionLabelProps> = ({
     >
       <div className="flex justify-center items-center h-full relative" style={{ pointerEvents: 'auto' }}>
         {isEditing ? (
-          <div className="flex items-center gap-1 bg-white dark:bg-[#18181b] border border-blue-500/50 p-1 shadow-lg rounded" onPointerDown={(e) => e.stopPropagation()}>
+          <div className="flex items-center gap-1 bg-white dark:bg-[#18181b] border border-custom-blue-500/50 p-1 shadow-lg rounded" onPointerDown={(e) => e.stopPropagation()}>
             <input
               ref={inputRef}
               type="text"
-              className="w-20 text-[10px] outline-none bg-transparent text-zinc-900 dark:text-white border-b border-blue-500/30"
+              className="w-20 text-[10px] outline-none bg-transparent text-zinc-900 dark:text-white border-b border-custom-blue-500/30"
               placeholder="Label..."
               value={editingLabel ?? label ?? ""}
               onChange={(e) => setEditingLabel(e.target.value)}
@@ -97,7 +97,7 @@ export const ConnectionLabel: React.FC<ConnectionLabelProps> = ({
           </div>
         ) : (
           <div
-            className={`px-2 py-0.5 glass-panel text-[10px] truncate max-w-[100px] select-none cursor-pointer border ${isSelected ? 'border-blue-500/50 bg-blue-500/5' : 'border-zinc-200 dark:border-white/10'} text-zinc-500 dark:text-zinc-400`}
+            className={`px-2 py-0.5 glass-panel text-[10px] truncate max-w-[100px] select-none cursor-pointer border ${isSelected ? 'border-custom-blue-500/50 bg-custom-blue-500/5' : 'border-zinc-200 dark:border-white/10'} text-zinc-500 dark:text-zinc-400`}
             onPointerDown={(e) => { 
               if (toolMode === ToolMode.PAN || isSpacePressed || e.button !== 0) return;
               e.stopPropagation(); 

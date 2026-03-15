@@ -35,7 +35,7 @@ export const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, options, onCh
             <button
                 ref={buttonRef}
                 onClick={toggle}
-                className={`flex items-center gap-0.5 px-1 py-0.5 text-[10px] font-bold text-zinc-600 dark:text-zinc-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded hover:bg-black/5 dark:hover:bg-white/5 font-sans h-7 w-10 justify-center shrink-0`}
+                className={`flex items-center gap-0.5 px-1 py-0.5 text-[10px] font-bold text-custom-blue-600 dark:text-custom-blue-400 hover:bg-black/5 dark:hover:bg-white/10 hover:text-custom-blue-400 transition-colors rounded hover:bg-black/5 dark:hover:bg-white/5 font-sans h-7 w-10 justify-center shrink-0`}
             >
                 <span className="truncate">{value}</span>
                 <ChevronDown size={6} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} opacity-50 shrink-0`} />
@@ -69,7 +69,7 @@ export const SizeDropdown: React.FC<SizeDropdownProps> = ({ value, options, onCh
                                     onClick={(e) => handleSelect(opt, e)}
                                     className={`w-full px-1 py-1 text-center text-[10px] transition-all
                                         ${opt === value
-                                            ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold'
+                                            ? 'bg-custom-blue-500/10 text-custom-blue-600 dark:text-custom-blue-400 font-bold'
                                             : 'text-zinc-600 dark:text-zinc-400 hover:bg-black/5 dark:hover:bg-white/10 hover:text-zinc-900 dark:hover:text-zinc-100'
                                         }`}
                                 >

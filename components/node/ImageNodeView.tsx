@@ -14,6 +14,7 @@ interface ImageNodeViewProps {
   onUpdateZIndex: (newZ: number) => void;
   onDragStart: (e: React.PointerEvent) => void;
   onUpdateSettings: (fit: 'cover' | 'contain', position: string) => void;
+  onFullscreen: () => void;
   globalFont: 'sans' | 'serif' | 'mono';
   captionFontStyle?: 'sans' | 'serif' | 'mono' | 'global';
   captionFontSize?: number;
@@ -31,7 +32,7 @@ interface ImageNodeViewProps {
 }
 
 export const ImageNodeView: React.FC<ImageNodeViewProps> = ({
-  image, title, zIndex, fit = 'contain', position = 'center', onDelete, onTitleChange, onUpdateZIndex, onDragStart, onUpdateSettings, globalFont, captionFontStyle, captionFontSize, captionColor, globalColor, height,
+  image, title, zIndex, fit = 'contain', position = 'center', onDelete, onTitleChange, onUpdateZIndex, onDragStart, onUpdateSettings, onFullscreen, globalFont, captionFontStyle, captionFontSize, captionColor, globalColor, height,
   onAskAI, onGenerateImage, aiPanel, isHovered, blur, backgroundColor, globalBlur = false, globalBackgroundColor = 'var(--node-bg-0)'
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -137,7 +138,7 @@ export const ImageNodeView: React.FC<ImageNodeViewProps> = ({
         )}
 
         {isRepositioning && (
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center bg-black/10 dark:bg-white/5 border-2 border-blue-500/50 z-20">
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center bg-black/10 dark:bg-white/5 border-2 border-custom-blue-500/50 z-20">
             <div className="bg-black/75 text-white text-[10px] px-2 py-1 backdrop-blur-md font-medium shadow-lg">Drag to Reposition</div>
           </div>
         )}
@@ -149,6 +150,7 @@ export const ImageNodeView: React.FC<ImageNodeViewProps> = ({
           onToggleFit={() => onUpdateSettings(fit === 'cover' ? 'contain' : 'cover', position)}
           onCyclePosition={() => onUpdateSettings(fit, cyclePosition(position))}
           onDelete={onDelete}
+          onFullscreen={onFullscreen}
           isHovered={isHovered}
         />
 

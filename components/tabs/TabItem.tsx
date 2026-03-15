@@ -76,19 +76,19 @@ export const TabItem: React.FC<TabItemProps> = ({
             className={`group relative h-full flex items-center justify-between gap-1 px-3
         border-r border-zinc-200/50 dark:border-white/5 cursor-pointer select-none transition-all duration-150 shrink-0
         ${isActive ? 'bg-white/80 dark:bg-white/10 text-zinc-900 dark:text-white' : 'bg-zinc-100/50 dark:bg-white/[0.02] text-zinc-500 dark:text-zinc-400 hover:bg-white/60 dark:hover:bg-white/5'}
-        ${isBeingDraggedOver ? 'bg-blue-500/5' : ''}`}
+        ${isBeingDraggedOver ? 'bg-custom-blue-500/5' : ''}`}
             style={{ flex: shouldUseFlex ? '1 1 0%' : '0 0 auto', minWidth: `${MIN_TAB_WIDTH}px` }}
         >
             {isBeingDraggedOver && (
-                <div className={`absolute top-0 bottom-0 w-0.5 bg-blue-500 z-10 ${draggedIndex !== null && index < draggedIndex ? 'left-0' : 'right-0'}`} />
+                <div className={`absolute top-0 bottom-0 w-0.5 bg-custom-blue-500 z-10 ${draggedIndex !== null && index < draggedIndex ? 'left-0' : 'right-0'}`} />
             )}
             
-            {isActive && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-blue-500" />}
+            {isActive && <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-custom-blue-500" />}
 
             {isEditing ? (
                 <input ref={inputRef} type="text" value={editValue} onChange={(e) => setEditValue(e.target.value)}
                     onBlur={handleSubmit} onKeyDown={handleKeyDown} onClick={(e) => e.stopPropagation()}
-                    className="flex-1 text-xs font-medium bg-transparent outline-none border-b border-blue-500 text-zinc-900 dark:text-white min-w-0" />
+                    className="flex-1 text-xs font-medium bg-transparent outline-none border-b border-custom-blue-500 text-zinc-900 dark:text-white min-w-0" />
             ) : (
                 <span className="flex-1 truncate text-xs font-medium">{tab.title}</span>
             )}

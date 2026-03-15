@@ -36,12 +36,11 @@ export const NodeHandle: React.FC<NodeHandleProps> = ({ position, onDown, onClic
         <div 
             className={`w-2.5 h-2.5 rounded-full bg-white dark:bg-[#09090b] border transition-all duration-200 
                 ${isSelected 
-                    ? 'border-blue-500 bg-blue-500 opacity-100 scale-125' 
-                    : 'border-zinc-400 dark:border-zinc-500 opacity-0 group-hover/handle:opacity-100 group-hover/handle:bg-blue-500 group-hover/handle:border-blue-500'
+                    ? 'border-custom-blue-500 bg-custom-blue-500 opacity-100 scale-125' 
+                    : 'border-zinc-400 dark:border-zinc-500 opacity-0 group-hover/handle:opacity-100 group-hover/handle:bg-custom-blue-500 group-hover/handle:border-custom-blue-500'
                 } 
-                ${isHovered ? 'opacity-100' : ''}`
-            }
-        />
+                ${isHovered ? 'opacity-100' : ''}`}
+            />
     </div>
   );
 };

@@ -67,7 +67,7 @@ export type HandlePosition = 'top' | 'right' | 'bottom' | 'left';
 
 export type ResizeDirection = 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw';
 
-export type AIProvider = 'gemini' | 'openai' | 'claude' | 'openrouter' | 'local';
+export type AIProvider = 'gemini' | 'openai' | 'claude' | 'openrouter' | 'local' | 'groq';
 
 export interface AIConfig {
   provider: AIProvider;

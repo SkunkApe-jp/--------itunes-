@@ -14,8 +14,8 @@ const ToolButton: React.FC<ToolButtonProps> = ({ active, onClick, icon, label })
   <button
     onClick={onClick}
     className={`w-8 h-8 flex items-center justify-center transition-colors ${active
-      ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
-      : 'text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100'
+      ? 'bg-custom-blue-500/20 text-custom-blue-600 dark:text-custom-blue-400'
+      : 'text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-custom-blue-600 dark:hover:text-custom-blue-400'
       }`}
     title={label}
   >
@@ -124,8 +124,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     if (bgInputRef.current) bgInputRef.current.value = '';
   };
 
-  const btnClass = "w-8 h-8 flex items-center justify-center transition-colors text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100";
-  const activeBtnClass = "bg-blue-500/20 text-blue-600 dark:text-blue-400";
+  const btnClass = "w-8 h-8 flex items-center justify-center transition-colors text-zinc-500 dark:text-zinc-400 hover:bg-black/5 hover:text-custom-blue-600 dark:hover:text-custom-blue-400";
+  const activeBtnClass = "bg-custom-blue-500/20 text-custom-blue-600 dark:text-custom-blue-400";
   const menuTextClass = "text-zinc-600 dark:text-zinc-400 hover:bg-black/5 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-zinc-100 transition-colors";
 
   // Enhanced glass menu style - using CSS variables for consistency
@@ -195,11 +195,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               <span className="text-sm font-bold leading-none px-0.5">T</span>
             </button>
 
-            <div className="relative">
-              <button onClick={() => fileInputRef.current?.click()} className={btnClass} title="Upload an Image Node">
-                <ImageIcon size={18} />
-              </button>
-            </div>
+            {/* Image Upload Button - Hidden */}
+            {false && (
+              <div className="relative">
+                <button onClick={() => fileInputRef.current?.click()} className={btnClass} title="Upload an Image Node">
+                  <ImageIcon size={18} />
+                </button>
+              </div>
+            )}
 
             <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleFileUpload} />
 

@@ -7,6 +7,7 @@ export const getDefaultModel = (provider: AIProvider): string => {
         case 'claude': return 'claude-3-5-sonnet-latest';
         case 'openrouter': return 'meta-llama/llama-3-70b-instruct';
         case 'local': return 'llama3';
+        case 'groq': return 'meta-llama/llama-4-scout-17b-16e-instruct';
         default: return '';
     }
 };
@@ -19,6 +20,7 @@ export const generateWithOpenAI = async (
     const { apiKey, baseUrl, model, provider } = config;
     const defaultBaseUrl = provider === 'openai' ? 'https://api.openai.com/v1' :
         provider === 'local' ? 'http://localhost:11434/v1' :
+        provider === 'groq' ? 'https://api.groq.com/openai/v1' :
             'https://openrouter.ai/api/v1';
 
     const apiUrl = (baseUrl || defaultBaseUrl).replace(/\/$/, '') + '/chat/completions';

@@ -224,8 +224,8 @@ export const TextNodeView = forwardRef<HTMLTextAreaElement, TextNodeViewProps>((
       {isGenerating && (
         <div className="absolute inset-0 bg-white/50 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center z-20">
           <div className="flex flex-col items-center gap-2">
-            <div className="animate-spin h-5 w-5 border-2 border-blue-500 border-t-transparent"></div>
-            <span className="text-xs text-blue-600 dark:text-blue-400 font-medium animate-pulse">AI Thinking...</span>
+            <div className="animate-spin h-5 w-5 border-2 border-custom-blue-500 border-t-transparent"></div>
+            <span className="text-xs text-custom-blue-600 dark:text-custom-blue-400 font-medium animate-pulse">AI Thinking...</span>
           </div>
         </div>
       )}
@@ -234,7 +234,7 @@ export const TextNodeView = forwardRef<HTMLTextAreaElement, TextNodeViewProps>((
 
       {!isEditing && (
         <div className={`absolute bottom-0 left-0 right-0 h-9 border-t border-zinc-200 dark:border-white/10 flex items-center gap-1 px-2 bg-zinc-50/95 dark:bg-[#18181b]/95 backdrop-blur-md shrink-0 font-sans transition-all duration-300 transform ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'} z-10`}>
-          <button onClick={(e) => { e.stopPropagation(); onExpand(); }} className="flex items-center gap-1.5 text-[10px] font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 px-2 py-1 transition-colors uppercase tracking-wider"><Sparkles size={11} /> Expand with AI</button>
+          <button onClick={(e) => { e.stopPropagation(); onExpand(); }} className="flex items-center gap-1.5 text-[10px] font-semibold text-custom-blue-600 dark:text-custom-blue-400 hover:bg-custom-blue-500/10 px-2 py-1 transition-colors uppercase tracking-wider"><Sparkles size={11} /> Expand with AI</button>
           <div className="w-px h-3 bg-zinc-300 dark:bg-white/10 mx-1"></div>
           <button onClick={(e) => { e.stopPropagation(); onEditAI(); }} className="flex items-center gap-1.5 text-[10px] font-semibold text-amber-600 dark:text-amber-400 hover:bg-amber-500/10 px-2 py-1 transition-colors uppercase tracking-wider"><Wand2 size={11} /> Edit with AI</button>
         </div>

@@ -116,7 +116,7 @@ export const GlobalToolbar: React.FC<GlobalToolbarProps> = ({
 
         <button
             onClick={() => setGlobalBlur(!globalBlur)}
-            className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${globalBlur ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
+            className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${globalBlur ? 'bg-custom-blue-500/20 text-custom-blue-600 dark:text-custom-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
             title="Toggle Global Blur"
         >
             <Droplets size={14} />

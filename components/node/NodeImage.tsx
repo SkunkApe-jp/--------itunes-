@@ -47,12 +47,12 @@ export const NodeImage: React.FC<NodeImageProps> = ({ url, title, height, fit, p
       
       <div className={`absolute top-2 right-2 flex flex-col gap-1 transition-opacity z-10 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
         <div className="flex gap-1">
-            <button onClick={(e) => { e.stopPropagation(); handleChangeImage(); }} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 border border-black/5 dark:border-white/10" title="Change Image"><ImagePlus size={14} /></button>
+            <button onClick={(e) => { e.stopPropagation(); handleChangeImage(); }} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-custom-blue-600 dark:hover:text-custom-blue-400 border border-black/5 dark:border-white/10" title="Change Image"><ImagePlus size={14} /></button>
             
-            <button onClick={(e) => {e.stopPropagation(); onUpdateSettings(height, fit === 'cover' ? 'contain' : 'cover', position)}} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 border border-black/5 dark:border-white/10" title={fit === 'cover' ? "Switch to Contain" : "Switch to Cover"}><MoveVertical size={14} /></button>
+            <button onClick={(e) => {e.stopPropagation(); onUpdateSettings(height, fit === 'cover' ? 'contain' : 'cover', position)}} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-custom-blue-600 dark:hover:text-custom-blue-400 border border-black/5 dark:border-white/10" title={fit === 'cover' ? "Switch to Contain" : "Switch to Cover"}><MoveVertical size={14} /></button>
             
             {fit === 'cover' && (
-                <button onClick={(e) => {e.stopPropagation(); cyclePosition()}} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-blue-400 border border-black/5 dark:border-white/10" title="Cycle Position">
+                <button onClick={(e) => {e.stopPropagation(); cyclePosition()}} className="p-1.5 bg-white/80 dark:bg-black/60 backdrop-blur text-zinc-600 dark:text-zinc-300 hover:text-custom-blue-600 dark:hover:text-custom-blue-400 border border-black/5 dark:border-white/10" title="Cycle Position">
                     {position === 'top' ? <ArrowUpFromLine size={14} /> : position === 'bottom' ? <ArrowDownFromLine size={14} /> : <AlignCenterVertical size={14} />}
                 </button>
             )}

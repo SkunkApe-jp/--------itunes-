@@ -87,7 +87,7 @@ export const FormatToolbar: React.FC<FormatToolbarProps> = ({
 
           <button
               onClick={onToggleBlur}
-              className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${blur ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
+              className={`w-7 h-7 flex items-center justify-center rounded transition-colors ${blur ? 'bg-custom-blue-500/20 text-custom-blue-600 dark:text-custom-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
               title="Toggle Blur"
           >
               <Droplets size={14} />

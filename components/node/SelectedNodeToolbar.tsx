@@ -78,7 +78,7 @@ export const SelectedNodeToolbar: React.FC<SelectedNodeToolbarProps> = ({
 
         <button
             onClick={() => updateSelectedNodes({ [blurKey]: !isBlurry })}
-            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${isBlurry ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
+            className={`w-6 h-6 flex items-center justify-center rounded transition-colors ${isBlurry ? 'bg-custom-blue-500/20 text-custom-blue-600 dark:text-custom-blue-400' : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'}`}
             title="Toggle Blur Effect"
         >
             <Droplets size={14} />

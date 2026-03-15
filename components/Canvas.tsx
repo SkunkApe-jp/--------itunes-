@@ -29,6 +29,7 @@ interface CanvasProps {
   onDeleteConnection: (id: string) => void;
   onReparentNode: (nodeId: string, newParentId: string | undefined) => void;
   onBackgroundDoubleClick: (pos: Position) => void;
+  onFullscreenNode: (nodeId: string) => void;
   registerFormatRef: (ref: any) => void;
   showGrid: boolean;
   snapToGrid: boolean;
@@ -55,7 +56,7 @@ interface CanvasProps {
 export const Canvas: React.FC<CanvasProps> = ({
   nodes, connections, viewport, toolMode, isSpacePressed,
   onViewportChange, onUpdateNode, onUpdateNodes, onDeleteNode, onSelectNode, onSelectNodes, onBranchNode, onConnectEnd, onExpandAI, onEditNodeAI, onSetImage,
-  onSelectConnection, onUpdateConnectionLabel, onDeleteConnection, onReparentNode, onBackgroundDoubleClick, registerFormatRef,
+  onSelectConnection, onUpdateConnectionLabel, onDeleteConnection, onReparentNode, onBackgroundDoubleClick, onFullscreenNode, registerFormatRef,
   showGrid, snapToGrid, showStars, globalFont, globalHeaderFont, globalHeaderFontSize, globalHeaderColor, globalBodyFontSize, globalColor,
   globalCaptionFont = 'sans', globalCaptionFontSize = 11, globalCaptionColor,
   globalBackgroundColor = 'var(--node-bg-0)', globalBlur = false, globalHeaderGrayLayer = true,
@@ -134,7 +135,7 @@ export const Canvas: React.FC<CanvasProps> = ({
         </div>
         {interactions.multiSelectBounds && (
           <div
-            className="absolute border-2 border-dashed border-blue-500/50 rounded-xl pointer-events-none z-0 bg-blue-500/[0.04]"
+            className="absolute border-2 border-dashed border-custom-blue-500/50 rounded-xl pointer-events-none z-0 bg-custom-blue-500/[0.04]"
             style={{
               left: interactions.multiSelectBounds.x,
               top: interactions.multiSelectBounds.y,
@@ -160,6 +161,7 @@ export const Canvas: React.FC<CanvasProps> = ({
               interactions.startResize(id, n, dir, e);
             }}
             onBranch={onBranchNode}
+            onFullscreen={onFullscreenNode}
             onDotDown={(e, nid, h) => { e.preventDefault(); e.stopPropagation(); interactions.startConnectionDrag(nid, h); }}
             onDotClick={interactions.handleDotClick}
             onNodeClick={interactions.handleNodeClick}
@@ -189,7 +191,7 @@ export const Canvas: React.FC<CanvasProps> = ({
       </div>
       {interactions.selectionBox && (
         <div
-          className="absolute border border-blue-500 bg-blue-500/10 pointer-events-none z-[9999]"
+          className="absolute border border-custom-blue-500 bg-custom-blue-500/10 pointer-events-none z-[9999]"
           style={{
             left: Math.min(interactions.selectionBox.start.x, interactions.selectionBox.end.x),
             top: Math.min(interactions.selectionBox.start.y, interactions.selectionBox.end.y),

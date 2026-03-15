@@ -1,0 +1,98 @@
+/* Custom Theme Override (Mapping Green to CSS Variables used by Components) */
+
+:root {
+  --theme-green: 34 197 94;
+  
+  /* Internal variables used for dynamic node styling */
+  --custom-blue-50: rgb(var(--theme-green) / 0.05);
+  --custom-blue-100: rgb(var(--theme-green) / 0.1);
+  --custom-blue-200: rgb(var(--theme-green) / 0.2);
+  --custom-blue-300: rgb(var(--theme-green) / 0.3);
+  --custom-blue-400: rgb(var(--theme-green) / 0.4);
+  --custom-blue-500: rgb(var(--theme-green));
+  --custom-blue-600: rgb(var(--theme-green) / 0.6);
+  --custom-blue-700: rgb(var(--theme-green) / 0.7);
+  --custom-blue-800: rgb(var(--theme-green) / 0.8);
+  --custom-blue-900: rgb(var(--theme-green) / 0.9);
+
+  /* Node Backgrounds & Text (inheriting from theme) */
+  --node-bg-0: var(--custom-blue-50);
+  --node-bg-1: var(--custom-blue-100);
+  --node-bg-2: var(--custom-blue-200);
+  --node-bg-3: var(--custom-blue-300);
+  --node-bg-4: var(--custom-blue-400);
+  --node-bg-5: var(--custom-blue-500);
+  --node-bg-6: var(--custom-blue-600);
+
+  --node-text-0: var(--custom-blue-900);
+  --node-text-1: var(--custom-blue-800);
+  --node-text-2: var(--custom-blue-700);
+  --node-text-3: var(--custom-blue-600);
+  --node-text-4: var(--custom-blue-500);
+}
+
+.dark {
+  --node-bg-0: rgb(0 0 0 / 0.1);
+  --node-bg-1: rgb(var(--theme-green) / 0.05);
+  --node-bg-2: rgb(var(--theme-green) / 0.1);
+  --node-bg-3: rgb(var(--theme-green) / 0.2);
+  
+  --node-text-0: #fcfffb;
+  --node-text-1: var(--custom-blue-50);
+  --node-text-2: var(--custom-blue-100);
+  --node-text-3: var(--custom-blue-200);
+  --node-text-4: var(--custom-blue-300);
+}
+
+/* 
+   Force override all custom-blue classes to use green colors
+   This ensures they work even if @theme block doesn't work
+*/
+.bg-custom-blue-50 { background-color: rgb(34 197 94 / 0.05) !important; }
+.bg-custom-blue-100 { background-color: rgb(34 197 94 / 0.1) !important; }
+.bg-custom-blue-200 { background-color: rgb(34 197 94 / 0.2) !important; }
+.bg-custom-blue-300 { background-color: rgb(34 197 94 / 0.3) !important; }
+.bg-custom-blue-400 { background-color: rgb(34 197 94 / 0.4) !important; }
+.bg-custom-blue-500 { background-color: rgb(34 197 94) !important; }
+.bg-custom-blue-600 { background-color: rgb(34 197 94 / 0.6) !important; }
+.bg-custom-blue-700 { background-color: rgb(34 197 94 / 0.7) !important; }
+.bg-custom-blue-800 { background-color: rgb(34 197 94 / 0.8) !important; }
+.bg-custom-blue-900 { background-color: rgb(34 197 94 / 0.9) !important; }
+
+.text-custom-blue-400 { color: rgb(34 197 94 / 0.4) !important; }
+.text-custom-blue-500 { color: rgb(34 197 94) !important; }
+.text-custom-blue-600 { color: rgb(34 197 94 / 0.6) !important; }
+
+.border-custom-blue-500 { border-color: rgb(34 197 94) !important; }
+.border-custom-blue-600 { border-color: rgb(34 197 94 / 0.6) !important; }
+
+/* Opacity variants */
+.bg-custom-blue-500\/10 { background-color: rgb(34 197 94 / 0.1) !important; }
+.bg-custom-blue-500\/20 { background-color: rgb(34 197 94 / 0.2) !important; }
+.bg-custom-blue-500\/5 { background-color: rgb(34 197 94 / 0.05) !important; }
+
+/* Ring colors */
+.ring-custom-blue-500 { --tw-ring-color: rgb(34 197 94) !important; }
+
+/* Dark mode variants */
+.dark .bg-custom-blue-50 { background-color: rgb(34 197 94 / 0.05) !important; }
+.dark .bg-custom-blue-100 { background-color: rgb(34 197 94 / 0.1) !important; }
+.dark .bg-custom-blue-200 { background-color: rgb(34 197 94 / 0.2) !important; }
+.dark .bg-custom-blue-300 { background-color: rgb(34 197 94 / 0.3) !important; }
+.dark .bg-custom-blue-400 { background-color: rgb(34 197 94 / 0.4) !important; }
+.dark .bg-custom-blue-500 { background-color: rgb(34 197 94) !important; }
+.dark .bg-custom-blue-600 { background-color: rgb(34 197 94 / 0.6) !important; }
+.dark .bg-custom-blue-700 { background-color: rgb(34 197 94 / 0.7) !important; }
+.dark .bg-custom-blue-800 { background-color: rgb(34 197 94 / 0.8) !important; }
+.dark .bg-custom-blue-900 { background-color: rgb(34 197 94 / 0.9) !important; }
+
+.dark .text-custom-blue-400 { color: rgb(34 197 94 / 0.4) !important; }
+.dark .text-custom-blue-500 { color: rgb(34 197 94) !important; }
+.dark .text-custom-blue-600 { color: rgb(34 197 94 / 0.6) !important; }
+
+.dark .border-custom-blue-500 { border-color: rgb(34 197 94) !important; }
+.dark .border-custom-blue-600 { border-color: rgb(34 197 94 / 0.6) !important; }
+
+.dark .bg-custom-blue-500\/10 { background-color: rgb(34 197 94 / 0.1) !important; }
+.dark .bg-custom-blue-500\/20 { background-color: rgb(34 197 94 / 0.2) !important; }
+.dark .bg-custom-blue-500\/5 { background-color: rgb(34 197 94 / 0.05) !important; }

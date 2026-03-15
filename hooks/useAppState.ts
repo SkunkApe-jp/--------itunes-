@@ -15,7 +15,7 @@ export const useAppState = () => {
     const [snapToGrid, setSnapToGrid] = useState(true);
 
     // Global Styles
-    const [globalHeaderFont, setGlobalHeaderFont] = useState<'sans' | 'serif' | 'mono'>('sans');
+    const [globalHeaderFont, setGlobalHeaderFont] = useState<'sans' | 'serif' | 'mono'>('serif');
     const [globalHeaderFontSize, setGlobalHeaderFontSize] = useState<number>(18);
     const [globalHeaderColor, setGlobalHeaderColor] = useState<string>('var(--node-text-0)');
 
@@ -43,15 +43,18 @@ export const useAppState = () => {
     const [showSettings, setShowSettings] = useState(false);
     const [showWelcome, setShowWelcome] = useState(false);
     const [aiConfig, setAiConfig] = useState<AIConfig>({
-        provider: 'gemini',
+        provider: 'groq',
         apiKey: '',
-        model: 'gemini-3-flash-preview'
+        model: 'meta-llama/llama-4-scout-17b-16e-instruct'
     });
 
     const [showStars, setShowStars] = useState(false);
 
     // Custom Background Image
     const [customBackground, setCustomBackground] = useState<string | null>(null);
+
+    // Fullscreen State
+    const [fullscreenNode, setFullscreenNode] = useState<string | null>(null);
 
     return {
         toolMode, setToolMode,
@@ -77,6 +80,7 @@ export const useAppState = () => {
         showSettings, setShowSettings,
         showWelcome, setShowWelcome,
         aiConfig, setAiConfig,
-        customBackground, setCustomBackground
+        customBackground, setCustomBackground,
+        fullscreenNode, setFullscreenNode
     };
 };

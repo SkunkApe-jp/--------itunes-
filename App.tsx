@@ -9,6 +9,7 @@ import { SettingsMenu } from "./components/SettingsMenu";
 import { WelcomeModal } from "./components/WelcomeModal";
 import { ExportModal } from "./components/ExportModal";
 import { TabBar } from "./components/tabs/TabBar";
+import { FullscreenOverlay } from "./components/FullscreenOverlay";
 import { useAppState } from "./hooks/useAppState";
 import { useTabs } from "./hooks/useTabs";
 import { useTabGraph } from "./hooks/useTabGraph";
@@ -76,6 +77,8 @@ function App() {
     setShowWelcome,
     aiConfig,
     setAiConfig,
+    fullscreenNode,
+    setFullscreenNode,
   } = useAppState();
 
   const [showExportModal, setShowExportModal] = React.useState(false);
@@ -689,6 +692,7 @@ function App() {
           onBackgroundDoubleClick={(pos) =>
             graph.addNode("text", "Untitled", "", undefined, pos)
           }
+          onFullscreenNode={(nodeId) => setFullscreenNode(nodeId)}
           registerFormatRef={(ref) => (activeEditorRef.current = ref.current)}
           showGrid={showGrid}
           snapToGrid={snapToGrid}
@@ -785,6 +789,13 @@ function App() {
             canPaste={canPaste}
             selectedText={contextMenu.selectedText}
             nodeType={contextMenuNodeType}
+          />
+        )}
+        {fullscreenNode && (
+          <FullscreenOverlay
+            node={graph.nodes.find(n => n.id === fullscreenNode) || null}
+            onClose={() => setFullscreenNode(null)}
+            customBackground={customBackground}
           />
         )}
       </div>

@@ -26,14 +26,14 @@ const ToastItem: React.FC<ToastProps> = ({ toast, onClose }) => {
   const icons = {
     success: <CheckCircle size={18} className="text-green-600 dark:text-green-500" />,
     error: <AlertCircle size={18} className="text-red-600 dark:text-red-500" />,
-    info: <Info size={18} className="text-blue-600 dark:text-blue-500" />,
+    info: <Info size={18} className="text-custom-blue-600 dark:text-custom-blue-500" />,
     warning: <AlertTriangle size={18} className="text-amber-600 dark:text-amber-500" />
   };
 
   const borderLeftColors = {
     success: 'border-l-green-600 dark:border-l-green-500',
     error: 'border-l-red-600 dark:border-l-red-500',
-    info: 'border-l-blue-600 dark:border-l-blue-500',
+    info: 'border-l-custom-blue-600 dark:border-l-custom-blue-500',
     warning: 'border-l-amber-600 dark:border-l-amber-500'
   };
 

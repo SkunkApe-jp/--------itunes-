@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { GripVertical, X, GitBranch } from 'lucide-react';
+import { GripVertical, X, GitBranch, Maximize2 } from 'lucide-react';
 
 interface NodeHeaderProps {
   title: string;
@@ -12,6 +12,7 @@ interface NodeHeaderProps {
   onDragStart: (e: React.PointerEvent) => void;
   onDelete: () => void;
   onBranch: (e: React.MouseEvent) => void;
+  onFullscreen: () => void;
   hasImage: boolean;
   globalFont: 'sans' | 'serif' | 'mono';
   fontStyle?: 'sans' | 'serif' | 'mono' | 'global';
@@ -30,7 +31,7 @@ interface NodeHeaderProps {
 }
 
 export const NodeHeader: React.FC<NodeHeaderProps> = ({
-  title, isEditing, zIndex, onUpdateTitle, onUpdateZIndex, onEnterEdit, onExitEdit, onDragStart, onDelete, onBranch, globalFont, fontStyle, fontSize, headerColor, globalColor, backgroundColor, blur, headerBlur, grayLayer, isHovered, isTitle,
+  title, isEditing, zIndex, onUpdateTitle, onUpdateZIndex, onEnterEdit, onExitEdit, onDragStart, onDelete, onBranch, onFullscreen, globalFont, fontStyle, fontSize, headerColor, globalColor, backgroundColor, blur, headerBlur, grayLayer, isHovered, isTitle,
   globalBackgroundColor = 'var(--node-bg-0)', globalBlur = false, globalHeaderGrayLayer = true
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -46,11 +47,23 @@ export const NodeHeader: React.FC<NodeHeaderProps> = ({
   }, [title, fontSize]);
 
   let headerStyle: React.CSSProperties = {
-      fontSize: fontSize ? `${fontSize}px` : '18px', 
-      lineHeight: '1.2', 
+      fontSize: fontSize ? `${fontSize}px` : '18px',
+      lineHeight: '1.2',
       color: headerColor || globalColor || undefined,
       position: 'relative',
-      zIndex: 1
+      zIndex: 1,
+      /*
+       * Explicitly set the font family here so it wins over any conflicting
+       * Tailwind utility order. Without this, `font-bold` (weight 700) fights
+       * `.font-serif { font-weight: 200 }` and browsers fall back to
+       * Georgia / Times New Roman instead of PP Editorial Old.
+       */
+      fontFamily: effectiveFont === 'serif'
+        ? "'PP Editorial Old', serif"
+        : effectiveFont === 'mono'
+        ? "'SF Mono', 'Monaco', 'Inconsolata', monospace"
+        : "'Atkinson Hyperlegible Next', sans-serif",
+      fontWeight: 200,
   };
 
   // Base layout classes
@@ -114,7 +127,7 @@ export const NodeHeader: React.FC<NodeHeaderProps> = ({
           value={title}
           onChange={(e) => onUpdateTitle(e.target.value)}
           disabled={!isEditing}
-          className={`font-bold tracking-tight bg-transparent border-none outline-none w-full resize-none overflow-hidden block ${!isEditing ? 'pointer-events-none' : ''} ${fontClass}`}
+          className={`tracking-tight bg-transparent border-none outline-none w-full resize-none overflow-hidden block ${!isEditing ? 'pointer-events-none' : ''} ${fontClass}`}
           style={headerStyle}
           placeholder="Enter title..."
           rows={1}
@@ -162,6 +175,7 @@ export const NodeHeader: React.FC<NodeHeaderProps> = ({
             className={`flex items-center gap-1 ${isHovered ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`}
             onPointerDown={(e) => e.stopPropagation()}
         >
+          <button onClick={(e) => { e.stopPropagation(); onFullscreen() }} className="p-1 hover:bg-custom-blue-500/20 text-zinc-400 dark:text-zinc-500 hover:text-custom-blue-600 dark:hover:text-custom-blue-400 transition-colors rounded-sm" title="Fullscreen"><Maximize2 size={14} /></button>
           <button onMouseDown={onBranch} className="p-1 hover:bg-purple-500/20 text-zinc-400 dark:text-zinc-500 hover:text-purple-600 dark:hover:text-purple-400 transition-colors rounded-sm" title="Branch Out"><GitBranch size={14} /></button>
           <button onClick={(e) => { e.stopPropagation(); onDelete() }} className="p-1 hover:bg-red-500/20 text-zinc-400 dark:text-zinc-500 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-sm"><X size={14} /></button>
         </div>
